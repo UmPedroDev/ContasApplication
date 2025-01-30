@@ -1,9 +1,12 @@
-﻿using ContasApplication.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using ContasApplication.Enums;
 
 namespace ContasApplication.Models
 {
     public class DespesaModel
     {
+        [Key]
+        public int Id { get; set; }
         public string NomeDespesa { get; set; } = string.Empty;
         public double ValorDespesa { get; set; }
         public DateTime CreateDate { get; set; }
