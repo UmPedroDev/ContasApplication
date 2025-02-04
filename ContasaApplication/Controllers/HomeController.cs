@@ -18,7 +18,7 @@ namespace ContasaApplication.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult AddDespesaView()
         {
             return View();
         }
