@@ -1,0 +1,50 @@
+﻿@using ContasApplication.Models
+@model DespesaModel;
+@{
+	ViewData["Title"] = "Adicionar despesa";
+}
+	
+<div class="container">
+	<div>
+		<form id="formAddDespesa" asp-controller="Despesas" asp-action="AddDespesa" method="post">
+
+			<div class="form-group">
+				<label id="labelInputConfig" for="Name">Nome</label>
+				<input asp-for="NomeDespesa" type="text" class="form-control" placeholder="Dê um nome da despesa">
+				@Html.ValidationMessageFor(x => x.NomeDespesa)
+			</div>
+
+			<div class="form-group">
+				<label id="labelInputConfig" for="Price">Valor</label>
+				<input asp-for="ValorDespesa" type="text" class="form-control" id="Price" placeholder="Digite o valor da despesa">
+			</div>
+
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" asp-for="Parcelado" id="flexCheckDefault">
+				<label id="labelInputConfig" class="form-check-label" for="Parcelado">
+					Essa despesa é parcelada?
+				</label>
+			</div>
+
+			<div id="parcelado" style="display: none">
+				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas</label>
+				<input asp-for="QuantidadeParcelas" type="number" class="form-control" placeholder="0">
+
+				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas pagas</label>
+				<input asp-for="QuantidadeParcelasPagas" type="number" class="form-control" placeholder="0">
+			</div>
+
+			<button type="submit" class="btn btn-primary">Adicionar</button>
+			<a role="button" class="btn btn-secondary" asp-controller="Despesas" asp-action="Index">Voltar</a>
+		</form>
+	</div>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/AddDespesa.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cleave.js/dist/cleave.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/AddDespesaView.css" />

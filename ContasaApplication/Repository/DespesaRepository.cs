@@ -25,10 +25,12 @@ namespace ContasApplication.Repository
                 QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas
             };
 
-            if (despesa.Parcelado == Enums.EnumSimNao.Sim)
+            if (despesa.Parcelado == true)
             {
-                newDespesa.QuantidadeParcelas =- newDespesa.QuantidadeParcelasPagas;
+                newDespesa.QuantidadeParcelas -= newDespesa.QuantidadeParcelasPagas;
+                newDespesa.MesFimParcelado = DateTime.Now.AddMonths(newDespesa.QuantidadeParcelas);
             }
+
             _bankContext.Add(newDespesa);
             _bankContext.SaveChanges();
             return newDespesa;
@@ -41,6 +43,31 @@ namespace ContasApplication.Repository
             {
                 despesas.Add(item);
             }
+            return despesas;
+        }
+
+        public double GetValorTotalDespesa(List<DespesaModel> despesas)
+        {
+            var valorTotal = 0.0;
+
+            foreach (var item in despesas)
+            {
+                valorTotal += item.ValorDespesa;
+            }
+            return valorTotal;
+        }
+        public List<DespesaModel> FindDespesaMes(DateTime mesReferencia)
+        {
+            List<DespesaModel> despesas = new List<DespesaModel>();
+
+            foreach (var item in _bankContext.Despesas)
+            {
+                if (item.CreateDate.Month == mesReferencia.Month || item.MesFimParcelado.Month > mesReferencia.Month)
+                {
+                    despesas.Add(item);
+                }
+            }
+
             return despesas;
         }
     }

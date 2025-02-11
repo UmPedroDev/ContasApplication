@@ -1,9 +1,44 @@
-﻿@{
-	ViewData["Title"] = "Despesas";
+﻿@using ContasApplication.Models
+@model DespesaAuxiliar;
+@{
+	ViewData["Title"] = "Index Page";
 }
-<div>
-	<a>
-		<h1 class="display-4">Página inicial</h1>
-	</a>
+
+<div class="text-center">
+	<h1 class="display-4">Bem vindo!</h1>
+	<a role="button" class="btn btn-primary" asp-controller="Despesas" asp-action="AddDespesa">Nova despesa</a>
 </div>
 
+<div class="text-center">
+	<table class="table table-striped" id="table-Despesas">
+		<thead>
+			<tr>
+				<th scope="col">Nome</th>
+				<th scope="col">Valor</th>
+				<th scope="col">Data</th>
+				<th scope="col">Num.Parcelas</th>
+				<th scope="col">Paga(s)</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.ListDespesas != null && Model.ListDespesas.Any())
+			{
+				@foreach (DespesaModel item in Model.ListDespesas)
+				{
+					<tr>
+						<td>@item.NomeDespesa</td>
+						<td>@item.ValorDespesa</td>
+						<td>@item.CreateDate</td>
+						<td>@item.QuantidadeParcelas</td>
+						<td>@item.QuantidadeParcelasPagas</td>
+					</tr>
+				}
+			}
+			<tr>
+				<td>
+					@Model.valorTotal
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

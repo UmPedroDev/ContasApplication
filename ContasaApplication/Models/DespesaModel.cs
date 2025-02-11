@@ -7,11 +7,14 @@ namespace ContasApplication.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required(ErrorMessage = "Informe o nome da despesa")]
         public string NomeDespesa { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Informe o valor da despesa")]
         public double ValorDespesa { get; set; }
         public DateTime CreateDate { get; set; }
-        public EnumSimNao Parcelado { get; set; } = EnumSimNao.Não;
+        public bool Parcelado { get; set; }
         public int QuantidadeParcelas { get; set; }
         public int QuantidadeParcelasPagas { get; set; }
+        public DateTime MesFimParcelado { get; set; }
     }
 }
