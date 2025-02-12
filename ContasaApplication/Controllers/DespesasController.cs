@@ -1,4 +1,5 @@
-﻿using ContasApplication.Models;
+﻿using ContasApplication.Enums;
+using ContasApplication.Models;
 using ContasApplication.Repository;
 using Microsoft.AspNetCore.Mvc;
 

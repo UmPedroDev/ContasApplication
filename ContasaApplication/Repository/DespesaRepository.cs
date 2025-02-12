@@ -62,7 +62,7 @@ namespace ContasApplication.Repository
 
             foreach (var item in _bankContext.Despesas)
             {
-                if (item.CreateDate.Month == mesReferencia.Month || item.MesFimParcelado.Month > mesReferencia.Month)
+                if (item.CreateDate.Month == mesReferencia.Month || item.MesFimParcelado.Month > mesReferencia.Month || item.DespesaFixa == true)
                 {
                     despesas.Add(item);
                 }
