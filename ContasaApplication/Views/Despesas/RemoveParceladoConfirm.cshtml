@@ -1,0 +1,15 @@
+﻿@using ContasApplication.Models;
+@model DespesaModel;
+
+@{
+	ViewData["Title"] = "Remove Despesa Parcelada";
+}
+
+<h1>
+	REMOVER DESPESA PARCELADA (@Model.NomeDespesa, de valor @Model.ValorDespesa)
+	<a role="button" class="btn btn-danger"
+	   asp-controller="Despesas" asp-action="RemoveParceladoConfirmMes" asp-route-id="@Model.Id" >Apagar somente a do mês</a>
+
+	<a role="button" class="btn btn-danger"
+	   asp-controller="Despesas" asp-action="RemoveParceladoConfirmTodos" asp-route-id="@Model.Id">Apagar tudo</a>
+</h1>

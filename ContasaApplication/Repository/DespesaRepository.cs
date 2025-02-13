@@ -36,6 +36,17 @@ namespace ContasApplication.Repository
             return newDespesa;
         }
 
+        public void RemoveDespesa(int id)
+        {
+            _bankContext.Remove(FindDespesaById(id));
+            _bankContext.SaveChanges();
+        }
+
+        public DespesaModel FindDespesaById(int id)
+        {
+            return _bankContext.Despesas.FirstOrDefault(x => x.Id == id);
+        }
+
         public List<DespesaModel> FindAllDespesa()
         {
             var despesas = new List<DespesaModel>();

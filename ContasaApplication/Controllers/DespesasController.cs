@@ -41,5 +41,45 @@ namespace ContasApplication.Controllers
 
             return View(despesa);
         }
+
+        public IActionResult RemoveDespesaView()
+        {
+            var despesas = new DespesaAuxiliar();
+
+            despesas.ListDespesas = _despesaRepository.FindDespesaMes(DateTime.Now);
+            despesas.valorTotal = _despesaRepository.GetValorTotalDespesa(despesas.ListDespesas);
+
+            return View(despesas);
+        }
+
+        public IActionResult RemoveDespesa(int id)
+        {
+            var despesa = _despesaRepository.FindDespesaById(id);
+
+            if (despesa.Parcelado == true)
+            {
+                return RedirectToAction("RemoveParceladoConfirm", despesa);
+            }
+
+            _despesaRepository.RemoveDespesa(id);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveParceladoConfirm(DespesaModel despesa)
+        {
+            return View(despesa);
+        }
+
+        public IActionResult RemoveParceladoConfirmMes(int id)
+        {
+            _despesaRepository.RemoveDespesa(id);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveParceladoConfirmTodos(int id)
+        {
+            _despesaRepository.RemoveDespesa(id);
+            return RedirectToAction("Index");
+        }
     }
 }

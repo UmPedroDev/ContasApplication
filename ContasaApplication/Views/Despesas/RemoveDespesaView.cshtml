@@ -1,0 +1,32 @@
+﻿@using ContasApplication.Models;
+@model DespesaAuxiliar;
+@{
+	ViewData["Title"] = "Remove Despesa";
+}
+
+<div class="text-center">
+	<table class="table table-striped" id="table-Despesas">
+		<thead>
+			<tr>
+				<th scope="col">Nome</th>
+				<th scope="col">Valor</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.ListDespesas != null && Model.ListDespesas.Any())
+			{
+				@foreach (DespesaModel item in Model.ListDespesas)
+				{
+					<tr>
+						<td>@item.NomeDespesa</td>
+						<td>@item.ValorDespesa</td>
+						<td>
+							<a role="button" class="btn btn-danger"
+							   asp-controller="Despesas" asp-action="RemoveDespesa" asp-route-id="@item.Id">Apagar</a>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
