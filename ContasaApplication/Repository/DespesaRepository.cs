@@ -1,4 +1,5 @@
 ﻿using ContasApplication.Data;
+using ContasApplication.Enums;
 using ContasApplication.Models;
 
 namespace ContasApplication.Repository
@@ -11,10 +12,48 @@ namespace ContasApplication.Repository
             _bankContext = bankContext;
         }
 
+        public Mes VerificaSeExisteMesParcela(DateTime mesReferencia)
+        {
+            Mes mesDespesa = _bankContext.Mes.FirstOrDefault(x => x.MesReferencia.Month == mesReferencia.Month);
 
+            if (mesDespesa == null)
+            {
+                var mes = (MesesEnum)mesReferencia.Month;
+
+                mesDespesa = new Mes()
+                {
+                    NomeMes = mes.ToString(),
+                    MesReferencia = mesReferencia
+                };
+
+                _bankContext.Mes.Add(mesDespesa);
+                _bankContext.SaveChanges();
+            }
+
+            return mesDespesa;
+        }
+
+        public DespesaModel CriarParcelaDespesa(DespesaModel despesa, Mes mes)
+        {
+            var newDespesa = new DespesaModel
+            {
+                NomeDespesa = despesa.NomeDespesa,
+                ValorDespesa = despesa.ValorDespesa,
+                Parcelado = despesa.Parcelado,
+                QuantidadeParcelas = despesa.QuantidadeParcelas,
+                QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
+                MesReferencia = mes,
+                CreateDate = DateTime.Now.AddMonths(1),
+                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
+            };
+
+            return newDespesa;
+        }
 
         public DespesaModel AddDespesa(DespesaModel despesa)
         {
+            Mes mesDespesa = VerificaSeExisteMesParcela(DateTime.Now);
+
             var newDespesa = new DespesaModel
             {
                 NomeDespesa = despesa.NomeDespesa,
@@ -22,13 +61,32 @@ namespace ContasApplication.Repository
                 CreateDate = DateTime.Now,
                 Parcelado = despesa.Parcelado,
                 QuantidadeParcelas = despesa.QuantidadeParcelas,
-                QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas
+                QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
+                MesReferencia = mesDespesa,
+                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
             };
 
             if (despesa.Parcelado == true)
             {
-                newDespesa.QuantidadeParcelas -= newDespesa.QuantidadeParcelasPagas;
-                newDespesa.MesFimParcelado = DateTime.Now.AddMonths(newDespesa.QuantidadeParcelas);
+                for (int i = newDespesa.MesReferencia.MesReferencia.Month; i < newDespesa.MesFimParcelado.Month; i++)
+                {
+                    var mes = _bankContext.Mes.FirstOrDefault(x => x.MesReferencia.Month == i + 1 && x.MesReferencia.Year <= newDespesa.MesFimParcelado.Year);
+
+                    if (mes == null)
+                    {
+                        mes = VerificaSeExisteMesParcela(newDespesa.CreateDate.AddMonths(1));
+                    }
+
+                    newDespesa = CriarParcelaDespesa(newDespesa, mes);
+                    if (i >= newDespesa.CreateDate.Month)
+                    {
+                        newDespesa.CreateDate = new DateTime(newDespesa.CreateDate.Year, i + 1, DateTime.Now.Day);
+                    }
+
+                    _bankContext.Add(newDespesa);
+                    _bankContext.SaveChanges();
+                }
+                return newDespesa;
             }
 
             _bankContext.Add(newDespesa);
@@ -73,7 +131,7 @@ namespace ContasApplication.Repository
 
             foreach (var item in _bankContext.Despesas)
             {
-                if (item.CreateDate.Month == mesReferencia.Month || item.MesFimParcelado.Month > mesReferencia.Month || item.DespesaFixa == true)
+                if (item.CreateDate.Month == mesReferencia.Month || item.MesFimParcelado.Month == mesReferencia.Month || item.DespesaFixa == true)
                 {
                     despesas.Add(item);
                 }
