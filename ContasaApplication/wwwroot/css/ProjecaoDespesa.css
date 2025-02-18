@@ -1,0 +1,55 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin: 0px;
+}
+
+footer {
+    position: fixed;
+    bottom: 10px;
+}
+
+#table-Despesas td {
+    text-align: start;
+}
+
+.field-validation-error {
+    color: #e01d1d;
+    display: flex;
+    margin-left: 6px;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.container:hover > :not(:hover){
+    opacity: .4;
+    transform: scale(0.9);
+}
+
+.item {
+    padding: 10px;
+    background-color: blue;
+    transition: .35s;
+    cursor: pointer;
+    margin-bottom: 5px;
+}

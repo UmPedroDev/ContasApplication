@@ -9,5 +9,6 @@ namespace ContasApplication.Data
         {
         }
         public DbSet<DespesaModel> Despesas { get; set; } 
+        public DbSet<Mes> Mes { get; set; }
     }
 }
