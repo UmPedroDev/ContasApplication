@@ -1,5 +1,4 @@
-﻿using ContasApplication.Enums;
-using ContasApplication.Models;
+﻿using ContasApplication.Models;
 using ContasApplication.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +17,7 @@ namespace ContasApplication.Controllers
             var despesas = new DespesaAuxiliar();
 
             despesas.ListDespesas = _despesaRepository.FindDespesaMes(DateTime.Now);
-            despesas.valorTotal = _despesaRepository.GetValorTotalDespesa(despesas.ListDespesas);
+            despesas.ValorTotal = _despesaRepository.GetValorTotalDespesa(despesas.ListDespesas);
 
             return View(despesas);
         }
@@ -47,7 +46,7 @@ namespace ContasApplication.Controllers
             var despesas = new DespesaAuxiliar();
 
             despesas.ListDespesas = _despesaRepository.FindDespesaMes(DateTime.Now);
-            despesas.valorTotal = _despesaRepository.GetValorTotalDespesa(despesas.ListDespesas);
+            despesas.ValorTotal = _despesaRepository.GetValorTotalDespesa(despesas.ListDespesas);
 
             return View(despesas);
         }

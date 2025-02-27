@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContasApplication.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20250211181729_newMigration")]
+    [Migration("20250226134552_newMigration")]
     partial class newMigration
     {
         /// <inheritdoc />
@@ -36,6 +36,18 @@ namespace ContasApplication.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("DespesaFixa")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("IdParcelado")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MesFimParcelado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MesReferenciaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NomeDespesa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -54,7 +66,41 @@ namespace ContasApplication.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MesReferenciaId");
+
                     b.ToTable("Despesas");
+                });
+
+            modelBuilder.Entity("ContasApplication.Models.Mes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("MesReferencia")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NomeMes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("valorTotal")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Mes");
+                });
+
+            modelBuilder.Entity("ContasApplication.Models.DespesaModel", b =>
+                {
+                    b.HasOne("ContasApplication.Models.Mes", "MesReferencia")
+                        .WithMany()
+                        .HasForeignKey("MesReferenciaId");
+
+                    b.Navigation("MesReferencia");
                 });
 #pragma warning restore 612, 618
         }

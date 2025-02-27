@@ -23,7 +23,16 @@ body {
 
 footer {
     position: fixed;
-    bottom: 10px;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+}
+
+footer div{
+    text-align: start;
+    width: 100%;
+    background-color: white;
+    padding-bottom: 5px;
 }
 
 #table-Despesas td {
@@ -41,15 +50,31 @@ body, html {
     margin: 0;
 }
 
-.container:hover > :not(:hover){
-    opacity: .4;
-    transform: scale(0.9);
+.container {
+    display: flex;
+    flex-direction: column; /* Ou 'row' dependendo de como quer que os itens sejam alinhados */
+    align-items: center; /* Alinha os itens no centro horizontalmente */
+    text-align: center; /* Centraliza o texto dentro de cada item */
+    width: 900px;
 }
 
 .item {
     padding: 10px;
+    border-radius: 25px;
     background-color: blue;
     transition: .35s;
     cursor: pointer;
     margin-bottom: 5px;
+    width: 900px;
+    height: 70px;
+}   
+
+h4 {
+    color: white;
+    text-align: center;
+}
+
+p {
+    color: white;
+    text-align: center;
 }

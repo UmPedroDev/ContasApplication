@@ -36,10 +36,13 @@ namespace ContasApplication.Migrations
                     b.Property<bool>("DespesaFixa")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("IdParcelado")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("MesFimParcelado")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MesReferenciaId")
+                    b.Property<int?>("MesReferenciaId")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeDespesa")
@@ -80,6 +83,9 @@ namespace ContasApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("valorTotal")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Mes");
@@ -89,9 +95,7 @@ namespace ContasApplication.Migrations
                 {
                     b.HasOne("ContasApplication.Models.Mes", "MesReferencia")
                         .WithMany()
-                        .HasForeignKey("MesReferenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MesReferenciaId");
 
                     b.Navigation("MesReferencia");
                 });

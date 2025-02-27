@@ -5,30 +5,31 @@
 namespace ContasApplication.Migrations
 {
     /// <inheritdoc />
-    public partial class ThirdMigrationFix : Migration
+    public partial class newMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<bool>(
-                name: "DespesaFixa",
+            migrationBuilder.AddColumn<int>(
+                name: "IdParcelado",
                 table: "Despesas",
-                type: "bit",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
+                type: "int",
+                nullable: true,
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "DespesaFixa",
+                name: "IdParcelado",
                 table: "Despesas",
                 type: "int",
                 nullable: false,
-                oldClrType: typeof(bool),
-                oldType: "bit");
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
         }
     }
 }

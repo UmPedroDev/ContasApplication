@@ -33,58 +33,50 @@ namespace ContasApplication.Repository
             return mesDespesa;
         }
 
-        public DespesaModel CriarParcelaDespesa(DespesaModel despesa, Mes mes)
-        {
-            var newDespesa = new DespesaModel
-            {
-                NomeDespesa = despesa.NomeDespesa,
-                ValorDespesa = despesa.ValorDespesa,
-                Parcelado = despesa.Parcelado,
-                QuantidadeParcelas = despesa.QuantidadeParcelas,
-                QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
-                MesReferencia = mes,
-                CreateDate = DateTime.Now.AddMonths(1),
-                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
-            };
-
-            return newDespesa;
-        }
-
         public DespesaModel AddDespesa(DespesaModel despesa)
         {
             Mes mesDespesa = VerificaSeExisteMesParcela(DateTime.Now);
+            var despesas = new List<DespesaModel>();
 
             var newDespesa = new DespesaModel
             {
                 NomeDespesa = despesa.NomeDespesa,
                 ValorDespesa = despesa.ValorDespesa,
-                CreateDate = DateTime.Now,
                 Parcelado = despesa.Parcelado,
                 QuantidadeParcelas = despesa.QuantidadeParcelas,
                 QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
+                CreateDate = DateTime.Now,
                 MesReferencia = mesDespesa,
-                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
+                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas - despesa.QuantidadeParcelasPagas),
+                DespesaFixa = despesa.DespesaFixa
             };
 
             if (despesa.Parcelado == true)
             {
-                for (int i = newDespesa.MesReferencia.MesReferencia.Month; i < newDespesa.MesFimParcelado.Month; i++)
+                var quantidadeParcelas = (despesa.QuantidadeParcelas + despesa.CreateDate.Month) - despesa.QuantidadeParcelasPagas;
+                var dataSoma = DateTime.Now;
+
+                for (int i = DateTime.Now.Month; i <= quantidadeParcelas; i++)
                 {
-                    var mes = _bankContext.Mes.FirstOrDefault(x => x.MesReferencia.Month == i + 1 && x.MesReferencia.Year <= newDespesa.MesFimParcelado.Year);
+                    var parcela = CriarParcelaDespesa(newDespesa);
+                    parcela.MesReferencia = VerificaSeExisteMesParcela(dataSoma);
 
-                    if (mes == null)
+                    if (parcela.QuantidadeParcelasPagas > 0 && i == DateTime.Now.Month)
                     {
-                        mes = VerificaSeExisteMesParcela(newDespesa.CreateDate.AddMonths(1));
+                        parcela.CreateDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        dataSoma = dataSoma.AddMonths(1);
+                        parcela.CreateDate = dataSoma;
                     }
 
-                    newDespesa = CriarParcelaDespesa(newDespesa, mes);
-                    if (i >= newDespesa.CreateDate.Month)
-                    {
-                        newDespesa.CreateDate = new DateTime(newDespesa.CreateDate.Year, i + 1, DateTime.Now.Day);
-                    }
-
-                    _bankContext.Add(newDespesa);
+                    _bankContext.Add(parcela);
                     _bankContext.SaveChanges();
+
+                    despesas.Add(parcela);
+
+                    AtualizarIdParcelado(despesas);
                 }
                 return newDespesa;
             }
@@ -93,11 +85,48 @@ namespace ContasApplication.Repository
             _bankContext.SaveChanges();
             return newDespesa;
         }
+        public DespesaModel CriarParcelaDespesa(DespesaModel despesa)
+        {
+            var newDespesa = new DespesaModel
+            {
+                NomeDespesa = despesa.NomeDespesa,
+                ValorDespesa = despesa.ValorDespesa,
+                Parcelado = despesa.Parcelado,
+                QuantidadeParcelas = despesa.QuantidadeParcelas,
+                QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
+                MesReferencia = despesa.MesReferencia,
+                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas)
+                DespesaFixa = false
+            };
+
+            return newDespesa;
+        }
+
+        public void AtualizarIdParcelado(List<DespesaModel> despesas)
+        {
+            var id = despesas[0].Id;
+
+            foreach (var item in despesas)
+            {
+                item.IdParcelado = id;
+                _bankContext.Update(item);
+                _bankContext.SaveChanges();
+            }
+        }
 
         public void RemoveDespesa(int id)
         {
-            _bankContext.Remove(FindDespesaById(id));
-            _bankContext.SaveChanges();
+            var despesa = FindDespesaById(id);
+            if (despesa.Parcelado == true)
+            {
+                _bankContext.RemoveRange(_bankContext.Despesas.Where(x => x.IdParcelado == id));
+                _bankContext.SaveChanges();
+            }
+            else
+            {
+                _bankContext.Remove(FindDespesaById(id));
+                _bankContext.SaveChanges();
+            }
         }
 
         public DespesaModel FindDespesaById(int id)
@@ -131,7 +160,7 @@ namespace ContasApplication.Repository
 
             foreach (var item in _bankContext.Despesas)
             {
-                if (item.CreateDate.Month == mesReferencia.Month || item.MesFimParcelado.Month == mesReferencia.Month || item.DespesaFixa == true)
+                if (item.CreateDate.Month == mesReferencia.Month || item.DespesaFixa == true)
                 {
                     despesas.Add(item);
                 }
@@ -139,5 +168,11 @@ namespace ContasApplication.Repository
 
             return despesas;
         }
+
+        public List<Mes> FindAllMesDespesas()
+        {
+            return _bankContext.Mes.ToList();
+        }
+
     }
 }

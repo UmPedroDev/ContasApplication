@@ -23,5 +23,18 @@ body {
 
 footer {
     position: fixed;
-    bottom: 10px;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+}
+
+footer div{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+}
+
+#containerIndex{
+    margin-top: 80px;
 }

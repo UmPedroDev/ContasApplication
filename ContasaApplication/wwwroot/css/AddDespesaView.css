@@ -26,6 +26,13 @@ footer {
     bottom: 10px;
 }
 
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+}
+
 #table-Despesas td {
     text-align: start;
 }
@@ -42,6 +49,7 @@ body, html {
 }
 
 #formAddDespesa {
+    margin-top: 20px;
     width: 500px;
     position: absolute;
     top: 50%;

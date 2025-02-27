@@ -1,0 +1,52 @@
+﻿@using ContasApplication.Models
+@model DespesaAuxiliar;
+@{
+	ViewData["Title"] = "Projecao";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<div class="container">
+	@foreach (var mes in Model.Meses)
+	{
+
+		<div class="item" data-table="@mes.MesReferencia.Month" onclick="mostrarDetalhes('@mes.NomeMes')">
+			<h4>@mes.NomeMes / @mes.MesReferencia.Year</h4>
+			<p>R$ @mes.valorTotal.ToString("F2").</p>
+		</div>
+
+		<div class="text-center" >
+			<table class="table table-striped" id="@mes.MesReferencia.Month" style="display: none; border: 1px solid black; padding: 10px; margin-top: 10px;">
+				<thead>
+					<tr>
+						<th scope="col">Nome</th>
+						<th scope="col">Valor</th>
+						<th scope="col">Data</th>
+						<th scope="col">Num.Parcelas</th>
+						<th scope="col">Paga(s)</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model.ListDespesas != null && Model.ListDespesas.Any())
+					{
+						@foreach (DespesaModel item in Model.ListDespesas.Where(x => x.CreateDate.Month == mes.MesReferencia.Month || x.DespesaFixa == true))
+						{
+							<tr>
+								<td>@item.NomeDespesa</td>
+								<td>R$ @item.ValorDespesa.ToString("F2")</td>
+								<td>@item.CreateDate</td>
+								<td>@item.QuantidadeParcelas</td>
+								<td>@item.QuantidadeParcelasPagas</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	}
+</div>
+
+
+
+<link rel="stylesheet" type="text/css" href="~/css/ProjecaoDespesa.css" />
+<script src="~/js/ProjecaoIndex.js"></script>

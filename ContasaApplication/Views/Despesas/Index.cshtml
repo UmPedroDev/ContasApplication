@@ -4,13 +4,10 @@
 	ViewData["Title"] = "Index Page";
 }
 
-<div class="text-center">
-	<h1 class="display-4">Bem vindo!</h1>
+<div class="text-center" id="containerIndex">
 	<a role="button" class="btn btn-primary" asp-controller="Despesas" asp-action="AddDespesa">Nova despesa</a>
 	<a role="button" class="btn btn-danger" asp-controller="Despesas" asp-action="RemoveDespesaView">Remover despesa</a>
-</div>
 
-<div class="text-center">
 	<table class="table table-striped" id="table-Despesas">
 		<thead>
 			<tr>
@@ -28,7 +25,7 @@
 				{
 					<tr>
 						<td>@item.NomeDespesa</td>
-						<td>@item.ValorDespesa</td>
+						<td>R$ @item.ValorDespesa.ToString("F2")</td>
 						<td>@item.CreateDate</td>
 						<td>@item.QuantidadeParcelas</td>
 						<td>@item.QuantidadeParcelasPagas</td>
@@ -37,7 +34,7 @@
 			}
 			<tr>
 				<td>
-					@Model.valorTotal
+					R$ @Model.ValorTotal.ToString("F2")
 				</td>
 			</tr>
 		</tbody>

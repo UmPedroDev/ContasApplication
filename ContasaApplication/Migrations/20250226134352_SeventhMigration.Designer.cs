@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContasApplication.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20250218181649_FifthMigrationFix")]
-    partial class FifthMigrationFix
+    [Migration("20250226134352_SeventhMigration")]
+    partial class SeventhMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,10 +39,13 @@ namespace ContasApplication.Migrations
                     b.Property<bool>("DespesaFixa")
                         .HasColumnType("bit");
 
+                    b.Property<int>("IdParcelado")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("MesFimParcelado")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MesReferenciaId")
+                    b.Property<int?>("MesReferenciaId")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeDespesa")
@@ -83,6 +86,9 @@ namespace ContasApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("valorTotal")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.ToTable("Mes");
@@ -92,9 +98,7 @@ namespace ContasApplication.Migrations
                 {
                     b.HasOne("ContasApplication.Models.Mes", "MesReferencia")
                         .WithMany()
-                        .HasForeignKey("MesReferenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MesReferenciaId");
 
                     b.Navigation("MesReferencia");
                 });

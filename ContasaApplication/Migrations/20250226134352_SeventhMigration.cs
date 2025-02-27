@@ -5,7 +5,7 @@
 namespace ContasApplication.Migrations
 {
     /// <inheritdoc />
-    public partial class FifthMigrationFix : Migration
+    public partial class SeventhMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
