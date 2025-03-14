@@ -22,3 +22,5 @@ var cleave = new Cleave('#Price', {
     numeralThousandsGroupStyle: 'thousand',
     prefix: 'R$ ',
 });
+
+

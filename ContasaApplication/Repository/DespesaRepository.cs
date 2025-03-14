@@ -48,34 +48,32 @@ namespace ContasApplication.Repository
                 CreateDate = DateTime.Now,
                 MesReferencia = mesDespesa,
                 MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas - despesa.QuantidadeParcelasPagas),
-                DespesaFixa = despesa.DespesaFixa
+                DespesaFixa = despesa.DespesaFixa,
+                Etiqueta = despesa.Etiqueta
             };
+
 
             if (despesa.Parcelado == true)
             {
-                var quantidadeParcelas = (despesa.QuantidadeParcelas + despesa.CreateDate.Month) - despesa.QuantidadeParcelasPagas;
+                var quantidadeParcelas = (despesa.QuantidadeParcelas - 1 + DateTime.Now.Month) - despesa.QuantidadeParcelasPagas;
                 var dataSoma = DateTime.Now;
+                var parcelasPagas = 0;
 
                 for (int i = DateTime.Now.Month; i <= quantidadeParcelas; i++)
                 {
                     var parcela = CriarParcelaDespesa(newDespesa);
-                    parcela.MesReferencia = VerificaSeExisteMesParcela(dataSoma);
 
-                    if (parcela.QuantidadeParcelasPagas > 0 && i == DateTime.Now.Month)
-                    {
-                        parcela.CreateDate = DateTime.Now;
-                    }
-                    else
-                    {
-                        dataSoma = dataSoma.AddMonths(1);
-                        parcela.CreateDate = dataSoma;
-                    }
+                    dataSoma = !(parcela.QuantidadeParcelas > 0 && i == DateTime.Now.Month) ? dataSoma.AddMonths(1) : dataSoma;
+                    parcela.CreateDate = parcela.QuantidadeParcelasPagas > 0 && i == DateTime.Now.Month ? DateTime.Now : dataSoma;
+                    parcela.MesReferencia = VerificaSeExisteMesParcela(dataSoma);
+                    parcela.QuantidadeParcelasPagas = parcelasPagas;
+                    parcela.QuantidadeParcelas -= parcelasPagas;
 
                     _bankContext.Add(parcela);
                     _bankContext.SaveChanges();
 
+                    parcelasPagas++;
                     despesas.Add(parcela);
-
                     AtualizarIdParcelado(despesas);
                 }
                 return newDespesa;
@@ -85,6 +83,8 @@ namespace ContasApplication.Repository
             _bankContext.SaveChanges();
             return newDespesa;
         }
+
+
         public DespesaModel CriarParcelaDespesa(DespesaModel despesa)
         {
             var newDespesa = new DespesaModel
@@ -95,12 +95,13 @@ namespace ContasApplication.Repository
                 QuantidadeParcelas = despesa.QuantidadeParcelas,
                 QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
                 MesReferencia = despesa.MesReferencia,
-                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas)
+                MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
                 DespesaFixa = false
             };
 
             return newDespesa;
         }
+
 
         public void AtualizarIdParcelado(List<DespesaModel> despesas)
         {
@@ -172,6 +173,15 @@ namespace ContasApplication.Repository
         public List<Mes> FindAllMesDespesas()
         {
             return _bankContext.Mes.ToList();
+        }
+        public Etiquetas FindEtiquetas(int id)
+        {
+            return _bankContext.Etiquetas.FirstOrDefault(x => x.EtiquetaId == id);
+        }
+
+        public List<Etiquetas> FindAllEtiquetas()
+        {
+            return _bankContext.Etiquetas.ToList();
         }
 
     }

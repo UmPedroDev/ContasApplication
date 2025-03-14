@@ -14,34 +14,29 @@ namespace ContasApplication.Controllers
 
         public IActionResult Index()
         {
+            var despesaAuxiliarLista = new List<DespesaAuxiliar>();
             var mesesComDespesa = _despesaRepository.FindAllMesDespesas();
             var despesas = _despesaRepository.FindAllDespesa();
-            var despesaAuxilar = new DespesaAuxiliar();
-            despesaAuxilar.Meses = new List<Mes>();
-            despesaAuxilar.ListDespesas = new List<DespesaModel>();
 
-            foreach (var item in mesesComDespesa)
+            foreach (var mes in mesesComDespesa)
             {
-                foreach (var item2 in despesas)
-                {
-                    if (item2.CreateDate.Month == item.MesReferencia.Month || item2.DespesaFixa == true)
-                    {
-                        bool existeMes = despesaAuxilar.Meses.FirstOrDefault(x => x.MesReferencia.Month == item.MesReferencia.Month) == null? false : true;
-                        if (existeMes)
-                        {
-                            item.valorTotal += item2.ValorDespesa;
-                            despesaAuxilar.ListDespesas.Add(item2);
-                            continue;
-                        }
+                var despesaAuxiliar = new DespesaAuxiliar();
+                despesaAuxiliar.Mes = mes;
+                despesaAuxiliar.ListDespesas = new List<DespesaModel>();
 
-                        item.valorTotal += item2.ValorDespesa;
-                        despesaAuxilar.Meses.Add(item);
-                        despesaAuxilar.ListDespesas.Add(item2);
+                foreach (var despesa in despesas)
+                {
+                    if (despesa.CreateDate.Month == mes.MesReferencia.Month || despesa.DespesaFixa == true)
+                    {
+                        despesaAuxiliar.ListDespesas.Add(despesa);
+                        despesaAuxiliar.ValorTotal += despesa.ValorDespesa;
                     }
                 }
+
+                despesaAuxiliarLista.Add(despesaAuxiliar);
             }
 
-            return View(despesaAuxilar);
+            return View(despesaAuxiliarLista);
         }
     }
 }

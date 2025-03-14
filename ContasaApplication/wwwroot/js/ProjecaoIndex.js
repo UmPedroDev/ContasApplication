@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     $(document).on("click", ".item", function (event) {
-        console.log("Item clicado!");
 
         // Obtém o ID específico da tabela associada ao item clicado
         var tabelaId = $(this).data("table");
@@ -21,3 +20,4 @@
         }
     });
 });
+

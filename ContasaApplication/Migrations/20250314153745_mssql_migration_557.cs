@@ -5,7 +5,7 @@
 namespace ContasApplication.Migrations
 {
     /// <inheritdoc />
-    public partial class SeventhMigration : Migration
+    public partial class mssql_migration_557 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

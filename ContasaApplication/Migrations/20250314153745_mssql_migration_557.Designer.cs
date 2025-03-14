@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContasApplication.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20250226134552_newMigration")]
-    partial class newMigration
+    [Migration("20250314153745_mssql_migration_557")]
+    partial class mssql_migration_557
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,10 @@ namespace ContasApplication.Migrations
                     b.Property<bool>("DespesaFixa")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("IdParcelado")
+                    b.Property<int>("Etiqueta")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdParcelado")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("MesFimParcelado")
@@ -69,6 +72,30 @@ namespace ContasApplication.Migrations
                     b.HasIndex("MesReferenciaId");
 
                     b.ToTable("Despesas");
+                });
+
+            modelBuilder.Entity("ContasApplication.Models.Etiquetas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EtiquetaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Icone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Etiquetas");
                 });
 
             modelBuilder.Entity("ContasApplication.Models.Mes", b =>

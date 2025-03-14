@@ -1,24 +1,25 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    height: 100vh;
+    margin-bottom: 60px;
 }
 
 footer {
@@ -28,13 +29,93 @@ footer {
     background-color: white;
 }
 
-footer div{
-    position: fixed;
-    width: 100%;
-    bottom: 0px;
-    background-color: white;
+    footer div {
+        position: fixed;
+        width: 100%;
+        bottom: 0px;
+        background-color: white;
+    }
+
+#containerIndex {
+    margin-top: 140px;
 }
 
-#containerIndex{
-    margin-top: 80px;
+.header-principal{
+    display: none;
+}
+
+nav.menu-lateral {
+    width: 80px;
+    height: 100%;
+    background-color: black;
+    padding: 40px 0px 40px 1%;
+    box-shadow: 2px 0 0 gray;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    transition: .3s;
+}
+
+    nav.menu-lateral:hover {
+        width: 300px;
+    }
+
+.btn-expandir {
+    width: 100%;
+    padding-left: 10px;
+}
+
+    .btn-expandir > i {
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+ul {
+    height: 100%;
+    list-style-type: none;
+}
+
+    ul li.item-menu {
+        transition: .5s;
+        margin-top: 20px;
+    }
+
+        ul li.item-menu:hover {
+            background-color: gray;
+            border-radius: 20px;
+        }
+
+        ul li.item-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            padding: 20px 4%;
+            display: flex;
+            line-height: 40px;
+        }
+
+            ul li.item-menu a .txt-link {
+                margin-left: 40px;
+                color: white;
+            }
+
+            ul li.item-menu a .icon > i {
+                font-size: 30px;
+                color: white;
+            }
+
+@media(width < 400px) {
+    nav.menu-lateral {
+        display: none;
+    }
+
+    ul li.item-menu a .icon > i {
+        display: none;
+    }
+
+    header.header-principal {
+        display: block;
+    }
 }

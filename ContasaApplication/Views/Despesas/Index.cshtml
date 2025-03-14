@@ -1,4 +1,5 @@
 ﻿@using ContasApplication.Models
+@using System.Globalization
 @model DespesaAuxiliar;
 @{
 	ViewData["Title"] = "Index Page";
@@ -13,9 +14,10 @@
 			<tr>
 				<th scope="col">Nome</th>
 				<th scope="col">Valor</th>
-				<th scope="col">Data</th>
-				<th scope="col">Num.Parcelas</th>
-				<th scope="col">Paga(s)</th>
+				<th scope="col" class="hidden-on-small">Data</th>
+				<th scope="col" class="hidden-on-small">Num.Parcelas</th>
+				<th scope="col" class="hidden-on-small">Paga(s)</th>
+				<th scope="col">Tipo</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,10 +27,20 @@
 				{
 					<tr>
 						<td>@item.NomeDespesa</td>
-						<td>R$ @item.ValorDespesa.ToString("F2")</td>
-						<td>@item.CreateDate</td>
-						<td>@item.QuantidadeParcelas</td>
-						<td>@item.QuantidadeParcelasPagas</td>
+						<td>R$ @item.ValorDespesa.ToString("F2", CultureInfo.InvariantCulture)</td>
+						<td class="hidden-on-small">@item.CreateDate</td>
+						<td class="hidden-on-small">@item.QuantidadeParcelas</td>
+						<td class="hidden-on-small" >@item.QuantidadeParcelasPagas</td>
+						@if (item.Etiqueta != 0)
+						{
+							foreach (var item2 in Model.Etiquetas)
+							{
+								if (item.Etiqueta == item2.EtiquetaId)
+								{
+									<td>@Html.Raw(@item2.Icone) - @item2.Nome</td>
+								}
+							}
+						}
 					</tr>
 				}
 			}
@@ -39,4 +51,35 @@
 			</tr>
 		</tbody>
 	</table>
+
+
+@* 	<div id="grafico">
+		<canvas id="grafico1"></canvas>
+	</div>
+
+	<script>
+		const ctx = document.getElementById('grafico1');
+
+		new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+			datasets: [{
+			  label: '# of Votes',
+			  data: [12, 19, 3, 5, 2, 3],
+			  borderWidth: 1
+			}]
+		  },
+		  options: {
+			scales: {
+			  y: {
+				beginAtZero: true
+			  }
+			}
+		  }
+		});
+	</script> *@
+
 </div>
+
+<link rel="stylesheet" type="text/css" href="~/css/IndexDespesa.css" />

@@ -4,7 +4,7 @@
 @{
 	ViewData["Title"] = "Adicionar despesa";
 }
-	
+<div class="background"><</div>
 <div class="container">
 	<div>
 		<form id="formAddDespesa" asp-controller="Despesas" asp-action="AddDespesa" method="post">
@@ -18,6 +18,21 @@
 			<div class="form-group">
 				<label id="labelInputConfig" for="Price">Valor</label>
 				<input asp-for="ValorDespesa" type="text" class="form-control" id="Price" placeholder="Digite o valor da despesa">
+			</div>
+
+			<div class="form-group">
+				<label id="labelInputConfig" for="Etiquetas">Etiquetas</label>
+				<select asp-for="Etiqueta" class="form-control" id="Etiquetas">
+					<option value="0">Selecione uma etiqueta</option>
+					<option value="1">"&#x1F3E0 - Moradia</option>
+					<option value="2">"&#x1F697 - Transporte</option>
+					<option value="3">"&#x1F37D - Alimentação</option>
+					<option value="4">"&#x1F691 - Saúde</option>
+					<option value="5">"&#x1F4D6 - Educação</option>
+					<option value="6">"&#x1F37F - Lazer</option>
+					<option value="7">"&#x1F4B8 - Dívidas</option>
+					<option value="8">"&#x1F416 - Imprevistos</option>
+					</select>
 			</div>
 
 			<div class="form-check">

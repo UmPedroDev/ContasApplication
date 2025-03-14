@@ -18,6 +18,7 @@ namespace ContasApplication.Controllers
 
             despesas.ListDespesas = _despesaRepository.FindDespesaMes(DateTime.Now);
             despesas.ValorTotal = _despesaRepository.GetValorTotalDespesa(despesas.ListDespesas);
+            despesas.Etiquetas = _despesaRepository.FindAllEtiquetas();
 
             return View(despesas);
         }

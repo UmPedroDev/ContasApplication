@@ -14,7 +14,8 @@ namespace ContasApplication.Models
         public int QuantidadeParcelasPagas { get; set; }
         public DateTime MesFimParcelado { get; set; }
         public bool DespesaFixa { get; set; }
-        public int? IdParcelado { get; set; }
+        public int IdParcelado { get; set; }
         public Mes? MesReferencia { get; set; }
+        public int Etiqueta { get; set; }
     }
 }

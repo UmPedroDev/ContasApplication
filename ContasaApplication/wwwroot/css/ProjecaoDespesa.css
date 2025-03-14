@@ -56,16 +56,17 @@ body, html {
     align-items: center; /* Alinha os itens no centro horizontalmente */
     text-align: center; /* Centraliza o texto dentro de cada item */
     width: 900px;
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 .item {
     padding: 10px;
     border-radius: 25px;
-    background-color: blue;
-    transition: .35s;
+    background-color: black;
     cursor: pointer;
     margin-bottom: 5px;
-    width: 900px;
+    width: 700px;
     height: 70px;
 }   
 
@@ -77,4 +78,18 @@ h4 {
 p {
     color: white;
     text-align: center;
+}
+
+@media(width < 400px) {
+  .container {
+        width: 55%;
+        margin-right: 115px;
+    }
+    .hidden-on-small {
+        display: none;
+    }
+    .item{
+        width: 350px;
+        margin-left: 50px;
+    }
 }

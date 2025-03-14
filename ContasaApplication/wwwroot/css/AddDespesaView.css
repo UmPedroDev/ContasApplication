@@ -2,6 +2,12 @@ html {
   font-size: 14px;
 }
 
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -13,12 +19,12 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;   
 }
 
 body {
-  margin: 0px;
+    margin: 0px;
 }
 
 footer {
@@ -48,6 +54,19 @@ body, html {
     margin: 0;
 }
 
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: url(../images/DespesaAdd-Desktop.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    filter: blur(10px);
+}
+
 #formAddDespesa {
     margin-top: 20px;
     width: 500px;
@@ -55,16 +74,52 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 5px solid black;
+    border: 3px solid black;
     border-radius: 20px;
     padding: 90px;
 }
 
-#formAddDespesa div{
-    margin-bottom: 20px;
-}
+    #formAddDespesa div {
+        margin-bottom: 20px;
+    }
 
 #parcelado input {
     margin-bottom: 20px;
     width: 100px;
+}
+
+@media(width < 400px) {
+    .container {
+        width: 95%; /* Quando a tela for menor que 600px, a largura será 95% */
+    }
+
+    .hidden-on-small {
+        display: none;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        min-height: 100vh;
+        background: url(../images/DespesaAdd-Desktop.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: -1;
+        filter: blur(10px);
+    }
+
+    #formAddDespesa {
+        margin-top: 20px;
+        width: 450px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparent;
+        color: black;
+        border: none;
+        padding: 90px;
+    }
 }

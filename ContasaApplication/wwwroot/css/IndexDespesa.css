@@ -1,0 +1,78 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+header{
+    display: none;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    height: 100vh;
+    margin-bottom: 60px;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    background-color: white;
+}
+
+    footer div {
+        position: fixed;
+        width: 100%;
+        bottom: 0px;
+        background-color: white;
+    }
+
+#containerIndex {
+    margin-top: 140px;
+}
+
+#grafico {
+    width: 500px;
+    height: 500px;
+}
+
+@media(width < 400px) {
+    nav.menu-lateral {
+        display: none;
+    }
+
+    .hidden-on-small {
+        display: none;
+    }
+
+    ul li.item-menu a .icon > i {
+        display: none;
+    }
+
+    header.header-principal {
+        display: block;
+    }
+
+    #table-Despesas {
+    }
+
+    #containerIndex a {
+        margin-bottom: 30px;
+        border: 2px solid black;
+        border-radius: 10px;
+    }
+}
+

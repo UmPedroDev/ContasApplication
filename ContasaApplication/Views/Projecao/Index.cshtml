@@ -1,5 +1,5 @@
 ﻿@using ContasApplication.Models
-@model DespesaAuxiliar;
+@model List<DespesaAuxiliar>;
 @{
 	ViewData["Title"] = "Projecao";
 }
@@ -7,36 +7,35 @@
 
 
 <div class="container">
-	@foreach (var mes in Model.Meses)
+	@foreach (var item in Model)
 	{
-
-		<div class="item" data-table="@mes.MesReferencia.Month" onclick="mostrarDetalhes('@mes.NomeMes')">
-			<h4>@mes.NomeMes / @mes.MesReferencia.Year</h4>
-			<p>R$ @mes.valorTotal.ToString("F2").</p>
+		<div class="item" data-table="@item.Mes.MesReferencia.Month" onclick="mostrarDetalhes('@item.Mes')">
+			<h4>@item.Mes.NomeMes / @item.Mes.MesReferencia.Year</h4>
+			<p>R$ @item.ValorTotal.ToString("F2").</p>
 		</div>
 
 		<div class="text-center" >
-			<table class="table table-striped" id="@mes.MesReferencia.Month" style="display: none; border: 1px solid black; padding: 10px; margin-top: 10px;">
+			<table class="table table-striped" id="@item.Mes.MesReferencia.Month" style="display: none; border: 1px solid black; padding: 10px; margin-top: 10px;">
 				<thead>
 					<tr>
 						<th scope="col">Nome</th>
 						<th scope="col">Valor</th>
-						<th scope="col">Data</th>
-						<th scope="col">Num.Parcelas</th>
-						<th scope="col">Paga(s)</th>
+						<th scope="col" class="hidden-on-small" class="hidden-on-small">Data</th>
+						<th scope="col" class="hidden-on-small">Num.Parcelas</th>
+						<th scope="col" class="hidden-on-small">Paga(s)</th>
 					</tr>
 				</thead>
 				<tbody>
-					@if (Model.ListDespesas != null && Model.ListDespesas.Any())
+					@if (item.ListDespesas != null && item.ListDespesas.Any())
 					{
-						@foreach (DespesaModel item in Model.ListDespesas.Where(x => x.CreateDate.Month == mes.MesReferencia.Month || x.DespesaFixa == true))
+						@foreach (DespesaModel despesa in item.ListDespesas)
 						{
 							<tr>
-								<td>@item.NomeDespesa</td>
-								<td>R$ @item.ValorDespesa.ToString("F2")</td>
-								<td>@item.CreateDate</td>
-								<td>@item.QuantidadeParcelas</td>
-								<td>@item.QuantidadeParcelasPagas</td>
+								<td>@despesa.NomeDespesa</td>
+								<td>R$ @despesa.ValorDespesa.ToString("F2")</td>
+								<td class="hidden-on-small">@despesa.CreateDate</td>
+								<td class="hidden-on-small">@despesa.QuantidadeParcelas</td>
+								<td class="hidden-on-small">@despesa.QuantidadeParcelasPagas</td>
 							</tr>
 						}
 					}

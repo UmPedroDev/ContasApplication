@@ -7,8 +7,10 @@ namespace ContasApplication.Data
     {
         public BankContext(DbContextOptions<BankContext> options) : base(options) 
         {
+            //Database.EnsureCreated();
         }
         public DbSet<DespesaModel> Despesas { get; set; } 
         public DbSet<Mes> Mes { get; set; }
+        public DbSet<Etiquetas> Etiquetas { get; set; }
     }
 }
