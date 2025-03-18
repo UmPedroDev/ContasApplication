@@ -7,7 +7,7 @@
 <div class="background"><</div>
 <div class="container">
 	<div>
-		<form id="formAddDespesa" asp-controller="Despesas" asp-action="AddDespesa" method="post">
+		<form onsubmit="formatForSubmit()" id="formAddDespesa" asp-controller="Despesas" asp-action="AddDespesa" method="post">
 
 			<div class="form-group">
 				<label id="labelInputConfig" for="Name">Nome</label>
@@ -59,6 +59,7 @@
 			<a role="button" class="btn btn-secondary" asp-controller="Despesas" asp-action="Index">Voltar</a>
 		</form>
 	</div>
+
 </div>
 
 
@@ -67,5 +68,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/AddDespesa.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/cleave.js/dist/cleave.min.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/AddDespesaView.css" />

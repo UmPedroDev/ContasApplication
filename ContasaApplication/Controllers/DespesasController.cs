@@ -1,4 +1,5 @@
-﻿using ContasApplication.Models;
+﻿using System.Globalization;
+using ContasApplication.Models;
 using ContasApplication.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +32,7 @@ namespace ContasApplication.Controllers
         [HttpPost]
         public IActionResult AddDespesa(DespesaModel despesa)
         {
-            despesa.ValorDespesa = (double)despesa.ValorDespesa;
+            despesa.ValorDespesa = Convert.ToDouble(despesa.ValorDespesa.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
 
             if (despesa.NomeDespesa != "")
             {

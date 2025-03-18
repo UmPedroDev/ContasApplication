@@ -27,7 +27,7 @@
 				{
 					<tr>
 						<td>@item.NomeDespesa</td>
-						<td>R$ @item.ValorDespesa.ToString("F2", CultureInfo.InvariantCulture)</td>
+						<td>@item.ValorDespesa.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
 						<td class="hidden-on-small">@item.CreateDate</td>
 						<td class="hidden-on-small">@item.QuantidadeParcelas</td>
 						<td class="hidden-on-small" >@item.QuantidadeParcelasPagas</td>
@@ -46,7 +46,7 @@
 			}
 			<tr>
 				<td>
-					R$ @Model.ValorTotal.ToString("F2")
+					@Model.ValorTotal.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
 				</td>
 			</tr>
 		</tbody>
@@ -83,3 +83,4 @@
 </div>
 
 <link rel="stylesheet" type="text/css" href="~/css/IndexDespesa.css" />
+

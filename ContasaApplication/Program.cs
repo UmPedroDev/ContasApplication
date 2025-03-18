@@ -13,7 +13,7 @@ builder.Services.AddRazorPages()
 
 //Adicionamos a comunicação com o banco de dados.
 builder.Services.AddEntityFrameworkSqlServer().AddDbContext<BankContext>(a => a.UseSqlServer(
-            "Server=testeazuregravacao.database.windows.net;Database=TesteAzure;User Id=pedroHenrique;Password=2610#Gabi;"));
+                "Server=ACERASPIRE;Database=Db_despesas;User id=sa;Password=2610#Gabi;"));
 
 builder.Services.AddScoped<IDespesaRepository, DespesaRepository>();
 

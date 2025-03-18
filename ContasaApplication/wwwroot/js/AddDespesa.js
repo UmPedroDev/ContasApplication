@@ -9,18 +9,22 @@
     });
 });
 
-document.getElementById("Price").addEventListener("input", function (event) {
-    let value = event.target.value.replace(/\D/g, "");
-    if (value.length > 2) {
-        value = value.replace(/(\d)(\d{2})$/, "$1,$2");
-    }
-    event.target.value = value.replace(/(\d)(?=(\d{3})+(\D|$))/g, "$1.");
+console.log("Script carregado!");
+
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("Price");
+
+    input.addEventListener("input", function (event) {
+        let value = event.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+        if (value) {
+            value = (parseFloat(value) / 100).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+        event.target.value = value; // Atualiza o campo com a formatação correta
+    });
 });
 
-var cleave = new Cleave('#Price', {
-    numeral: true,
-    numeralThousandsGroupStyle: 'thousand',
-    prefix: 'R$ ',
-});
 
-
+//teste.
