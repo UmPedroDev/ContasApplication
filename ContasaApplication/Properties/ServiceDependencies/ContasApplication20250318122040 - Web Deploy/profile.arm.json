@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "ContasApplication20250318104254",
+      "defaultValue": "ContasApplication20250318122040",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
