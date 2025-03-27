@@ -49,7 +49,8 @@ namespace ContasApplication.Repository
                 MesReferencia = mesDespesa,
                 MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas - despesa.QuantidadeParcelasPagas),
                 DespesaFixa = despesa.DespesaFixa,
-                Etiqueta = despesa.Etiqueta
+                Etiqueta = despesa.Etiqueta,
+                UsuarioId = despesa.UsuarioId,
             };
 
 
@@ -96,7 +97,8 @@ namespace ContasApplication.Repository
                 QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
                 MesReferencia = despesa.MesReferencia,
                 MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
-                DespesaFixa = false
+                DespesaFixa = false,
+                UsuarioId = despesa.UsuarioId,
             };
 
             return newDespesa;
@@ -115,9 +117,9 @@ namespace ContasApplication.Repository
             }
         }
 
-        public void RemoveDespesa(int id)
+        public void RemoveDespesa(int id, int idUsuario)
         {
-            var despesa = FindDespesaById(id);
+            var despesa = FindDespesaById(id, idUsuario);
             if (despesa.Parcelado == true)
             {
                 _bankContext.RemoveRange(_bankContext.Despesas.Where(x => x.IdParcelado == id));
@@ -125,23 +127,23 @@ namespace ContasApplication.Repository
             }
             else
             {
-                _bankContext.Remove(FindDespesaById(id));
+                _bankContext.Remove(FindDespesaById(id, idUsuario));
                 _bankContext.SaveChanges();
             }
         }
 
-        public DespesaModel FindDespesaById(int id)
+        public DespesaModel FindDespesaById(int id, int idUsuario)
         {
-            return _bankContext.Despesas.FirstOrDefault(x => x.Id == id);
+            var despesa = _bankContext.Despesas.FirstOrDefault(x => x.Id == id && x.UsuarioId == idUsuario);
+            return despesa;
         }
 
-        public List<DespesaModel> FindAllDespesa()
+        public List<DespesaModel> FindAllDespesa(int idUsuario)
         {
             var despesas = new List<DespesaModel>();
-            foreach (var item in _bankContext.Despesas)
-            {
-                despesas.Add(item);
-            }
+
+            despesas = _bankContext.Despesas.Where(x => x.UsuarioId == idUsuario).ToList();
+
             return despesas;
         }
 
@@ -155,11 +157,11 @@ namespace ContasApplication.Repository
             }
             return valorTotal;
         }
-        public List<DespesaModel> FindDespesaMes(DateTime mesReferencia)
+        public List<DespesaModel> FindDespesaMes(DateTime mesReferencia, int idUsuario)
         {
             List<DespesaModel> despesas = new List<DespesaModel>();
 
-            foreach (var item in _bankContext.Despesas)
+            foreach (var item in _bankContext.Despesas.Where(x => x.UsuarioId == idUsuario))
             {
                 if (item.CreateDate.Month == mesReferencia.Month || item.DespesaFixa == true)
                 {

@@ -1,18 +1,21 @@
-﻿@{
+﻿@using ContasApplication.Models;
+@model Usuarios;
+@{
 	ViewData["Title"] = "Login Page";
 }
 
 <body>
 	<div class="container">
 		<div class="form-box login">
-			<form action="" method="">
+			<form asp-controller="Login" asp-action="RotaLoginRegistro" method="post">
 				<h1>Login</h1>
 				<div class="input-box">
-					<input type="text" placeholder="Usuário" required />
+					<input type="text" asp-for="Usuario" placeholder="Usuário"  />
 					<i class="bx bxs-user"></i>
 				</div>
 				<div class="input-box">
-					<input type="password" placeholder="Senha" required />
+					<input type="password" asp-for="Senha" placeholder="Senha" />
+					<input style="display: none" asp-for="page" value="0" />
 					<i class='bx bxs-lock-alt'></i>
 				</div>
 				<div class="forgot-link">
@@ -23,19 +26,20 @@
 		</div>
 
 		<div class="form-box register">
-			<form action="/" method="post">
+			<form asp-controller="Login" asp-action="RotaLoginRegistro" method="post">
 				<h1>Registre-se</h1>
 				<div class="input-box">
-					<input type="text" placeholder="Usuário" required />
+					<input type="text" asp-for="Usuario" placeholder="Usuário"  />
 					<i class="bx bxs-user"></i>
 				</div>
 				<div class="input-box">
-					<input type="email" placeholder="Email" required />
+					<input type="email" asp-for="Email" placeholder="Email"  />
 					<i class='bx bxs-envelope'></i>
 				</div>
 
 				<div class="input-box">
-					<input type="password" placeholder="Senha" required />
+					<input type="password" asp-for="Senha" placeholder="Senha"  />
+					<input style="display: none" asp-for="page" value="1" />
 					<i class='bx bxs-lock-alt'></i>
 				</div>
 
@@ -61,7 +65,25 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Erro</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p id="mensagemErro">@TempData["MensagemErro"]</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<link rel="stylesheet" href="~/css/loginIndex.css" />
 	<script src="~/js/LoginIndex.js"></script>
-
 </body>
+
+

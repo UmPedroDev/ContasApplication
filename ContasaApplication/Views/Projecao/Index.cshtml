@@ -23,6 +23,7 @@
 						<th scope="col" class="hidden-on-small" class="hidden-on-small">Data</th>
 						<th scope="col" class="hidden-on-small">Num.Parcelas</th>
 						<th scope="col" class="hidden-on-small">Paga(s)</th>
+						<th scope="col">Tipo</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,6 +37,16 @@
 								<td class="hidden-on-small">@despesa.CreateDate</td>
 								<td class="hidden-on-small">@despesa.QuantidadeParcelas</td>
 								<td class="hidden-on-small">@despesa.QuantidadeParcelasPagas</td>
+								@if (despesa.Etiqueta != 0)
+								{
+									foreach (var item2 in Model.First().Etiquetas)
+									{
+										if (despesa.Etiqueta == item2.EtiquetaId)
+										{
+											<td>@Html.Raw(@item2.Icone)</td>
+										}
+									}
+								}
 							</tr>
 						}
 					}

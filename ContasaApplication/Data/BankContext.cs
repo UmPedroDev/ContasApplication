@@ -12,5 +12,6 @@ namespace ContasApplication.Data
         public DbSet<DespesaModel> Despesas { get; set; } 
         public DbSet<Mes> Mes { get; set; }
         public DbSet<Etiquetas> Etiquetas { get; set; }
+        public DbSet<Usuarios> Usuarios { get; set; }
     }
 }

@@ -14,15 +14,18 @@ namespace ContasApplication.Controllers
 
         public IActionResult Index()
         {
+            int idUsuario = HttpContext.Session.GetInt32("UsuarioId") ?? 0;
+
             var despesaAuxiliarLista = new List<DespesaAuxiliar>();
             var mesesComDespesa = _despesaRepository.FindAllMesDespesas();
-            var despesas = _despesaRepository.FindAllDespesa();
+            var despesas = _despesaRepository.FindAllDespesa(idUsuario);
 
             foreach (var mes in mesesComDespesa)
             {
                 var despesaAuxiliar = new DespesaAuxiliar();
                 despesaAuxiliar.Mes = mes;
                 despesaAuxiliar.ListDespesas = new List<DespesaModel>();
+                despesaAuxiliar.Etiquetas = _despesaRepository.FindAllEtiquetas();
 
                 foreach (var despesa in despesas)
                 {

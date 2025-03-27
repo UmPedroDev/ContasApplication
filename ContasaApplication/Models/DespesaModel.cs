@@ -17,5 +17,6 @@ namespace ContasApplication.Models
         public int IdParcelado { get; set; }
         public Mes? MesReferencia { get; set; }
         public int Etiqueta { get; set; }
+        public int UsuarioId { get; set; }
     }
 }
