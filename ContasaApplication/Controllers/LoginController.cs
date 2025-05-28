@@ -21,7 +21,7 @@ namespace ContasApplication.Controllers
         public IActionResult RotaLoginRegistro(Usuarios usuarios)
         {
             bool verificacao = false;
-            if (usuarios.page == Enums.PageEnum.Login)
+            if (usuarios.Page == Enums.PageEnum.Login)
             {
                 if (string.IsNullOrEmpty(usuarios.Usuario))
                 {

@@ -7,7 +7,7 @@ namespace ContasApplication.Models
         [Key]
         public int Id { get; set; }
         public string NomeMes { get; set; }
-        public DateTime MesReferencia { get; set; }
+        public DateTime MesReferenciaId { get; set; }
         public double valorTotal { get; set; }
     }
 }

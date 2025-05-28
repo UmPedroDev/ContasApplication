@@ -7,17 +7,17 @@
 <div class="background"><</div>
 <div class="container">
 	<div>
-		<form onsubmit="formatForSubmit()" id="formAddDespesa" asp-controller="Despesas" asp-action="AddDespesa" method="post">
+		<form asp-controller="Despesas" asp-action="AddDespesa" method="post" id="formAddDespesa">
 
 			<div class="form-group">
 				<label id="labelInputConfig" for="Name">Nome</label>
-				<input asp-for="NomeDespesa" type="text" class="form-control" placeholder="Dê um nome da despesa">
+				<input asp-for="NomeDespesa" type="text" class="form-control" placeholder="Dê um nome da despesa" maxlength="35">
 				@Html.ValidationMessageFor(x => x.NomeDespesa)
 			</div>
 
 			<div class="form-group">
 				<label id="labelInputConfig" for="Price">Valor</label>
-				<input asp-for="ValorDespesa" type="text" class="form-control" id="Price" placeholder="Digite o valor da despesa">
+				<input asp-for="ValorDespesa" type="text" class="form-control" id="Price" placeholder="Digite o valor da despesa" min="0" maxlength="12">
 			</div>
 
 			<div class="form-group">
@@ -44,10 +44,22 @@
 
 			<div id="parcelado" style="display: none">
 				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas</label>
-				<input asp-for="QuantidadeParcelas" type="number" class="form-control" placeholder="0">
+				<input id="QuantidadeParcelas" asp-for="QuantidadeParcelas" type="number" class="form-control" placeholder="0" min="0" max="500">
 
-				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas pagas</label>
-				<input asp-for="QuantidadeParcelasPagas" type="number" class="form-control" placeholder="0">
+				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas</label>
+				<input id="QuantidadeParcelasPagas" asp-for="QuantidadeParcelasPagas" type="number" class="form-control" placeholder="0" min="0" max="500">
+			</div>
+
+			<div class="form-check-despesaFutura">
+				<input class="form-check-input" type="checkbox" asp-for="Parcelado" id="flexCheckDefault">
+				<label id="labelInputConfig" class="form-check-label" for="Parcelado">
+					Essa é uma despesa com data futura?
+				</label>
+			</div>
+
+			<div style=" display: none" id="dataFutura">
+				<label id="labelInputConfig" for="parcelaFutura">Data futura</label>
+				<input asp-for="CreateDate" type="date" class="form-control" placeholder="dd/mm/aaaa">
 			</div>
 
 			<div>

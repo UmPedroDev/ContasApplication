@@ -7,8 +7,8 @@ namespace ContasApplication.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Nome { get; set; } = string.Empty;
-        public string Icone { get; set; } = string.Empty;
+        public string Nome { get; set; }
+        public string Icone { get; set; } 
         public int EtiquetaId { get; set; }
     }
 }

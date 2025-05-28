@@ -14,7 +14,7 @@ namespace ContasApplication.Repository
 
         public Mes VerificaSeExisteMesParcela(DateTime mesReferencia)
         {
-            Mes mesDespesa = _bankContext.Mes.FirstOrDefault(x => x.MesReferencia.Month == mesReferencia.Month);
+            Mes mesDespesa = _bankContext.Mes.FirstOrDefault(x => x.MesReferenciaId.Month == mesReferencia.Month);
 
             if (mesDespesa == null)
             {
@@ -23,7 +23,7 @@ namespace ContasApplication.Repository
                 mesDespesa = new Mes()
                 {
                     NomeMes = mes.ToString(),
-                    MesReferencia = mesReferencia
+                    MesReferenciaId = mesReferencia
                 };
 
                 _bankContext.Mes.Add(mesDespesa);
@@ -45,8 +45,8 @@ namespace ContasApplication.Repository
                 Parcelado = despesa.Parcelado,
                 QuantidadeParcelas = despesa.QuantidadeParcelas,
                 QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
-                CreateDate = DateTime.Now,
-                MesReferencia = mesDespesa,
+                CreateDate = despesa.CreateDate != DateTime.MinValue? despesa.CreateDate : DateTime.Now,
+                MesReferenciaId = mesDespesa,
                 MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas - despesa.QuantidadeParcelasPagas),
                 DespesaFixa = despesa.DespesaFixa,
                 Etiqueta = despesa.Etiqueta,
@@ -66,7 +66,7 @@ namespace ContasApplication.Repository
 
                     dataSoma = !(parcela.QuantidadeParcelas > 0 && i == DateTime.Now.Month) ? dataSoma.AddMonths(1) : dataSoma;
                     parcela.CreateDate = parcela.QuantidadeParcelasPagas > 0 && i == DateTime.Now.Month ? DateTime.Now : dataSoma;
-                    parcela.MesReferencia = VerificaSeExisteMesParcela(dataSoma);
+                    parcela.MesReferenciaId = VerificaSeExisteMesParcela(dataSoma);
                     parcela.QuantidadeParcelasPagas = parcelasPagas;
                     parcela.QuantidadeParcelas -= parcelasPagas;
 
@@ -95,7 +95,7 @@ namespace ContasApplication.Repository
                 Parcelado = despesa.Parcelado,
                 QuantidadeParcelas = despesa.QuantidadeParcelas,
                 QuantidadeParcelasPagas = despesa.QuantidadeParcelasPagas,
-                MesReferencia = despesa.MesReferencia,
+                MesReferenciaId = despesa.MesReferenciaId,
                 MesFimParcelado = DateTime.Now.AddMonths(despesa.QuantidadeParcelas),
                 DespesaFixa = false,
                 UsuarioId = despesa.UsuarioId,

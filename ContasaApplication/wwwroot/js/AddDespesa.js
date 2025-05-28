@@ -9,6 +9,17 @@
     });
 });
 
+$(document).ready(function () {
+    $('#form-check-despesaFutura').change(function () {
+        if ($(this).is(':checked')) {
+            $('#dataFutura').show();
+        }
+        else {
+            $('#dataFutura').hide();
+        }
+    });
+});
+
 console.log("Script carregado!");
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -26,5 +37,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.querySelectorAll("#QuantidadeParcelas").forEach(input => {
+    let maxValue = 500;
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "-" || event.key === "e") {
+            event.preventDefault();
+        }
+    });
 
-//teste.
+    input.addEventListener("input", function () {
+        if (this.value < 0) {
+            this.value = 0;
+        }
+    });
+
+    input.addEventListener("blur", function () {
+        if (this.value > maxValue) {
+            this.value = maxValue;
+        }
+    });
+});

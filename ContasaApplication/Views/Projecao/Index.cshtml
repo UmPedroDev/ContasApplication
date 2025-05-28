@@ -9,13 +9,13 @@
 <div class="container">
 	@foreach (var item in Model)
 	{
-		<div class="item" data-table="@item.Mes.MesReferencia.Month" onclick="mostrarDetalhes('@item.Mes')">
-			<h4>@item.Mes.NomeMes / @item.Mes.MesReferencia.Year</h4>
+		<div class="item" data-table="@item.Mes.MesReferenciaId.Month" onclick="mostrarDetalhes('@item.Mes')">
+			<h4>@item.Mes.NomeMes / @item.Mes.MesReferenciaId.Year</h4>
 			<p>R$ @item.ValorTotal.ToString("F2").</p>
 		</div>
 
 		<div class="text-center" >
-			<table class="table table-striped" id="@item.Mes.MesReferencia.Month" style="display: none; border: 1px solid black; padding: 10px; margin-top: 10px;">
+			<table class="table table-striped" id="@item.Mes.MesReferenciaId.Month" style="display: none; border: 1px solid black; padding: 10px; margin-top: 10px;">
 				<thead>
 					<tr>
 						<th scope="col">Nome</th>

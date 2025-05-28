@@ -29,7 +29,7 @@ namespace ContasApplication.Controllers
 
                 foreach (var despesa in despesas)
                 {
-                    if (despesa.CreateDate.Month == mes.MesReferencia.Month || despesa.DespesaFixa == true)
+                    if (despesa.CreateDate.Month == mes.MesReferenciaId.Month || despesa.DespesaFixa == true)
                     {
                         despesaAuxiliar.ListDespesas.Add(despesa);
                         despesaAuxiliar.ValorTotal += despesa.ValorDespesa;

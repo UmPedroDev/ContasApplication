@@ -8,13 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 //Adicionamos o atualizador automático de páginas Razor
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 
 //Adicionamos a comunicação com o banco de dados.
-builder.Services.AddEntityFrameworkSqlServer().AddDbContext<BankContext>(a => a.UseSqlServer(
-                "Server=testeazuregravacao.database.windows.net;Database=TesteAzure;User Id=pedroHenrique;Password=2610#Gabi;"));
+builder.Services.AddDbContext<BankContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
 
 
 builder.Services.AddScoped<IDespesaRepository, DespesaRepository>();
@@ -27,6 +28,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;  // Segurança
     options.Cookie.IsEssential = true;  // Necessário para conformidade com GDPR
 });
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
