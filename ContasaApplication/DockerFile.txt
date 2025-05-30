@@ -1,14 +1,14 @@
+# Etapa 1: build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY . ./
 RUN dotnet restore "./ContasApplication.csproj"
 RUN dotnet publish "./ContasApplication.csproj" -c Release -o /out
 
-
-ENV ASPNETCORE_URLS=http://+:8080
-EXPOSE 8080
+# Etapa 2: runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /out ./
-EXPOSE 80
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "ContasApplication.dll"]
