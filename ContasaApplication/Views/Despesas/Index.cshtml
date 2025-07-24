@@ -1,0 +1,58 @@
+﻿@using ContasApplication.Models
+@using System.Globalization
+@model DespesaAuxiliar;
+@{
+	ViewData["Title"] = "Index Page";
+}
+
+<div class="text-center" id="containerIndex">
+	<a role="button" class="btn btn-primary" asp-controller="Despesas" asp-action="AddDespesa">Nova despesa</a>
+	<a role="button" class="btn btn-danger" asp-controller="Despesas" asp-action="RemoveDespesaView">Remover despesa</a>
+
+	<table class="table table-striped" id="table-Despesas">
+		<thead>
+			<tr>
+				<th scope="col">Nome</th>
+				<th scope="col">Valor</th>
+				<th scope="col" class="hidden-on-small">Data</th>
+				<th scope="col" class="hidden-on-small">Num.Parcelas</th>
+				<th scope="col" class="hidden-on-small">Paga(s)</th>
+				<th scope="col">Tipo</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.ListDespesas != null && Model.ListDespesas.Any())
+			{
+				@foreach (DespesaModel item in Model.ListDespesas)
+				{
+					<tr>
+						<td>@item.NomeDespesa</td>
+						<td>@item.ValorDespesa.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
+						<td class="hidden-on-small">@item.CreateDate</td>
+						<td class="hidden-on-small">@item.QuantidadeParcelas</td>
+						<td class="hidden-on-small" >@item.QuantidadeParcelasPagas</td>
+						@if (item.Etiqueta != 0)
+						{
+							foreach (var item2 in Model.Etiquetas)
+							{
+								if (item.Etiqueta == item2.EtiquetaId)
+								{
+									<td>@Html.Raw(@item2.Icone) - @item2.Nome</td>
+								}
+							}
+						}
+					</tr>
+				}
+			}
+			<tr>
+				<td>
+					@Model.ValorTotal.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+
+<link rel="stylesheet" type="text/css" href="~/css/IndexDespesa.css" />
+

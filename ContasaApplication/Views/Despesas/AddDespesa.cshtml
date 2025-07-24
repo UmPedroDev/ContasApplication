@@ -1,0 +1,85 @@
+﻿@using ContasApplication.Enums
+@using ContasApplication.Models
+@model DespesaModel;
+@{
+	ViewData["Title"] = "Adicionar despesa";
+}
+<div class="background"><</div>
+<div class="container">
+	<div>
+		<form asp-controller="Despesas" asp-action="AddDespesa" method="post" id="formAddDespesa">
+
+			<div class="form-group">
+				<label id="labelInputConfig" for="Name">Nome</label>
+				<input asp-for="NomeDespesa" type="text" class="form-control" placeholder="Dê um nome da despesa" maxlength="35">
+				@Html.ValidationMessageFor(x => x.NomeDespesa)
+			</div>
+
+			<div class="form-group">
+				<label id="labelInputConfig" for="Price">Valor</label>
+				<input asp-for="ValorDespesa" type="text" class="form-control" id="Price" placeholder="Digite o valor da despesa" min="0" maxlength="12">
+			</div>
+
+			<div class="form-group">
+				<label id="labelInputConfig" for="Etiquetas">Etiquetas</label>
+				<select asp-for="Etiqueta" class="form-control" id="Etiquetas">
+					<option value="0">Selecione uma etiqueta</option>
+					<option value="1">&#x1F3E0 - Moradia</option>
+					<option value="2">&#x1F697 - Transporte</option>
+					<option value="3">&#x1F37D - Alimentação</option>
+					<option value="4">&#x1F691 - Saúde</option>
+					<option value="5">&#x1F4D6 - Educação</option>
+					<option value="6">&#x1F37F - Lazer</option>
+					<option value="7">&#x1F4B8 - Dívidas</option>
+					<option value="8">&#x1F416 - Imprevistos</option>
+					</select>
+			</div>
+
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" asp-for="Parcelado" id="flexCheckDefault">
+				<label id="labelInputConfig" class="form-check-label" for="Parcelado">
+					Essa despesa é parcelada?
+				</label>
+			</div>
+
+			<div id="parcelado" style="display: none">
+				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas</label>
+				<input id="QuantidadeParcelas" asp-for="QuantidadeParcelas" type="number" class="form-control" placeholder="0" min="0" max="500">
+
+				<label id="labelInputConfig" for="Parcelas">Quantidade de parcelas pagas</label>
+				<input id="QuantidadeParcelasPagas" asp-for="QuantidadeParcelasPagas" type="number" class="form-control" placeholder="0" min="0" max="500", disabled>
+			</div>
+
+			<div class="form-check-despesaFutura" id="despesaFutura">
+				<input class="form-check-input" type="checkbox" asp-for="Parcelado" id="flexCheckData">
+				<label id="labelInputConfig" class="form-check-label" for="CreateDate">
+					Essa é uma despesa com data futura?
+				</label>
+			</div>
+
+			<div style=" display: none" id="dataFutura">
+				<label id="labelInputConfig" for="parcelaFutura">Data futura</label>
+				<input asp-for="CreateDate" type="date" class="form-control" id="inputData" placeholder="dd/mm/aaaa">
+			</div>
+
+			<div>
+				<input class="form-check-input" type="checkbox" asp-for="DespesaFixa" id="flexCheckContaFixa">
+				<label id="labelInputConfig" class="form-check-label" for="Parcelado">Essa é uma conta fixa?</label>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Adicionar</button>
+			<a role="button" class="btn btn-secondary" asp-controller="Despesas" asp-action="Index" >Voltar</a>
+		</form>
+	</div>
+
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/AddDespesa.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/cleave.js/dist/cleave.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/AddDespesaView.css" />
